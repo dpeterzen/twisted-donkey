@@ -33,3 +33,15 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Editor and system files
+.vscode/
+*.swp
+*.swo
+*.swn
+*.bak
+*.orig
+*.sublime*
+*.idea/
+*.tmp
+*.DS_Store
