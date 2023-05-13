@@ -1,6 +1,5 @@
 import React from 'react';
-import FlipPage from 'react-flip-page';
-
+import { Card, CardContent, CardMedia, Typography } from '@mui/material';
 interface Data {
     title: string;
     parsed_image_description: string[];
@@ -24,25 +23,28 @@ const FlipBook: React.FC<FlipBookProps> = ({ data }) => {
     }));
 
     return (
-        <div>
+        <div className='my-4'>
             <h1>{title}</h1>
-            <FlipPage
-                className="book"
-                uncutPages={true}
-                orientation="horizontal"
-                height={650}
-                width={700}
-                pageBackground="#F0E2DF"
-                animationDuration="400"
-        >
-                {pages.map((page, i) => (
-                    <article key={i} style={{ width: "600px ", padding: "10px 20px"}}>
-                    <img src={`data:image/png;base64,${page.illustration}`} alt={`Illustration ${i + 1}`} />
-                        <p>{page.textDescription}</p>
-                        <small>{page.imageDescription}</small>
-                    </article>
-                ))}
-            </FlipPage>
+            <br></br>
+            {pages.map((page, i) => (
+                <Card key={i} style={{ maxWidth: 600, marginBottom: 20 }}>
+                    <CardMedia
+                        component="img"
+                        alt={`Illustration ${i + 1}`}
+                        height="240"
+                        image={`data:image/png;base64,${page.illustration}`}
+                        title={`Illustration ${i + 1}`}
+                    />
+                    <CardContent>
+                        <Typography variant="body2" color="textSecondary" component="p">
+                            {page.textDescription}
+                        </Typography>
+                        <Typography variant="caption" color="textSecondary" component="small">
+                            {page.imageDescription}
+                        </Typography>
+                    </CardContent>
+                </Card>
+            ))}
         </div>
     );
 }

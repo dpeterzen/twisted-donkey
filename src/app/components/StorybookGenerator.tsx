@@ -2,6 +2,8 @@
 
 import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import FlipBook from './FlipBook'; // Assuming FlipBook is in the same directory
+import { TextField, Button, Slider } from '@mui/material';
+import CustomSlider from './ui/CustomSlider';
 
 const StorybookGenerator: React.FC = () => {
   const [description, setDescription] = useState<string>('');
@@ -19,15 +21,33 @@ const StorybookGenerator: React.FC = () => {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <input type="text" value={description} onChange={(e: ChangeEvent<HTMLInputElement>) => setDescription(e.target.value)} />
-        <input className='m-1' type="number" value={pages} onChange={(e: ChangeEvent<HTMLInputElement>) => setPages(parseInt(e.target.value))} />
-        <button className='m-1' type="submit">Generate Storybook</button>
-      </form>
+<div className='m-5'>
+  <form onSubmit={handleSubmit}>
+    <TextField 
+      type="text" 
+      value={description} 
+      onChange={(e: ChangeEvent<HTMLInputElement>) => setDescription(e.target.value)}
+      id="outlined-multiline-static"
+      label="Sentence/topic to use..."
+      multiline
+      fullWidth
+      rows={4}
+      sx={{
+        color: '#e8e8ed;',
+      }}
+      placeholder='Set in the cowboy bebop universe, write a story about Benny, the bandit who travels to Mars in search of secret treasure'
+    />
+    <p className='my-6 pb-1 font-light text-sm'>Number of pages...</p>
+    <CustomSlider
+      aria-label="Pages"
+      value={pages}
+      onChange={(e: Event, newValue: number | number[]) => setPages(newValue as number)}
+    />
+    <Button className='m-1' type="submit" variant="outlined">Generate Storybook</Button>
+  </form>
 
-      {isLoading ? <p>Generating...</p> : data && <FlipBook data={data} />}
-    </div>
+  {isLoading ? <p>Generating...</p> : data && <FlipBook data={data} />}
+</div>
   );
 };
 

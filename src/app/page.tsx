@@ -1,7 +1,6 @@
 import Link from 'next/link'
 import './globals.css'
 
-
 export default function Home() {
   return (
     <main className='bg-cyan-600'>
