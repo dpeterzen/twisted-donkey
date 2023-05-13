@@ -19,6 +19,8 @@
     "postcss": "8.4.23",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-flip-page": "^1.6.4",
+    "react-pageflip": "^2.0.3",
     "swr": "^2.1.5",
     "tailwindcss": "3.3.2",
     "typescript": "5.0.4"
