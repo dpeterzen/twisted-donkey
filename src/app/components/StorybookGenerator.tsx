@@ -1,9 +1,21 @@
 "use client"
 
 import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
-import FlipBook from './FlipBook'; // Assuming FlipBook is in the same directory
+import FlipBook from './FlipBook';
 import { TextField, Button, Slider } from '@mui/material';
 import CustomSlider from './ui/CustomSlider';
+import { keyframes } from '@emotion/react';
+import styled from '@emotion/styled';
+
+const FlashingText = styled.p`
+  animation: ${keyframes`
+    0% {opacity: 1;}
+    75% {opacity: 1;}
+    76% {opacity: 0;}
+    99% {opacity: 0;}
+    100% {opacity: 1;}
+  `} 2s linear infinite;
+`;
 
 const StorybookGenerator: React.FC = () => {
   const [description, setDescription] = useState<string>('');
@@ -46,7 +58,7 @@ const StorybookGenerator: React.FC = () => {
     <Button className='m-1' type="submit" variant="outlined">Generate Storybook</Button>
   </form>
 
-  {isLoading ? <p>Generating...</p> : data && <FlipBook data={data} />}
+  {isLoading ? <FlashingText>Generating...</FlashingText> : data && <FlipBook data={data} />}
 </div>
   );
 };

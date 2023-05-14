@@ -14,3 +14,7 @@ body {
 .MuiInputBase-root {
   color: rgb(214 198 198 / 87%);
 }
+
+.MuiInputBase-root textarea {
+  color: rgb(214 198 198 / 87%);
+}
