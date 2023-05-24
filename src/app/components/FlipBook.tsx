@@ -42,6 +42,9 @@ const FlipBook: React.FC<FlipBookProps> = ({ data }) => {
                         <Typography variant="caption" color="textSecondary" component="small">
                             {page.imageDescription}
                         </Typography>
+                        <Typography variant="caption" color="textSecondary" component="p" align="right">
+                            Page {i + 1}
+                        </Typography>
                     </CardContent>
                 </Card>
             ))}

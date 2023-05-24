@@ -26,7 +26,7 @@ const StorybookGenerator: React.FC = () => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    const response = await fetch(`http://localhost:4000/get_storybook/?desc=${description}&pgs=${pages}`);
+    const response = await fetch(`http://localhost:4000/get_storybook/?des=${description}&pgs=${pages}`);
     const data = await response.json();
     setData(data);
     setIsLoading(false);
