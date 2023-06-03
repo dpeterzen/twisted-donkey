@@ -8,15 +8,15 @@ import { TextField, Button } from '@mui/material';
 const StorybookGenerator: React.FC = () => {
   const [description, setDescription] = useState<string>('');
   const [pages, setPages] = useState<number>(0);
-  const [data, setData] = useState<string | null>(null);
+  const [taskId, setTaskId] = useState<string | null>(null);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
     try {
-      const response = await fetch(`http://localhost:8000/get_storybook/?des=${encodeURIComponent(description)}&pgs=${pages}`);
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}get_storybook/?des=${encodeURIComponent(description)}&pgs=${pages}`);
       const responseData = await response.json();
-      setData(responseData.task_id);
+      setTaskId(responseData.task_id);
     } catch (error) {
       console.error('Error:', error);
     }
@@ -50,7 +50,7 @@ const StorybookGenerator: React.FC = () => {
         </Button>
       </form>
 
-      {data !== null && <FlipBook taskID={data} totalPages={pages} />}
+      {taskId !== null && <FlipBook taskID={taskId} totalPages={pages} />}
     </div>
   );
 };
