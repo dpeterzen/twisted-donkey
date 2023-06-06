@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Card, CardContent, Typography, CircularProgress, CardMedia, Box } from "@mui/material";
 
 interface Progress {
   total: number;
@@ -7,9 +8,9 @@ interface Progress {
 
 interface Data {
   title: string;
-  text_description: string;
-  image_description: string;
-  illustrations: string;
+  text_description?: string[];
+  image_description?: string[];
+  illustrations?: string[];
 }
 
 interface SSEData {
@@ -36,6 +37,7 @@ const TestBook: React.FC<TestBookProps> = ({ taskId }) => {
 
       try {
         const parsedData: SSEData = JSON.parse(event.data);
+        console.log(parsedData); // log the parsed data
         setSSEData(parsedData);
 
         // Check if status is done and close the connection
@@ -64,20 +66,77 @@ const TestBook: React.FC<TestBookProps> = ({ taskId }) => {
     return <div>Loading...</div>;
   }
 
+  const { data } = sseData;
+  const maxLength = Math.max(
+    data?.text_description?.length || 0,
+    data?.image_description?.length || 0,
+    data?.illustrations?.length || 0
+  );
+
   return (
-    <div>
-      <div>Status: {sseData.status}</div>
-      <div>Progress: {sseData.progress.current}/{sseData.progress.total}</div>
-      {sseData.data && (
-        <>
-          <div>Title: {sseData.data.title}</div>
-          <div>Text Description: {sseData.data.text_description}</div>
-          <div>Image Description: {sseData.data.image_description}</div>
-          <div>Illustrations: {sseData.data.illustrations}</div>
-        </>
+    <div className="flex flex-col justify-center items-center">
+      <Card sx={{ marginBottom: 2, padding: 2 }}>
+        <Typography variant="body1">Status: {sseData.status}</Typography>
+        <div className="flex items-center">
+          <Typography variant="body1">Progress: </Typography>
+          <CircularProgress
+            variant="determinate"
+            value={(sseData.progress.current / sseData.progress.total) * 100}
+            style={{ marginLeft: '8px' }}
+          />
+        </div>
+      </Card>
+
+      {data && (
+        <Card sx={{ maxWidth: 500 }}>
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="div" style={{ textAlign: 'center' }}>
+              {data.title}
+            </Typography>
+          </CardContent>
+          {[...Array(maxLength)].map((_, index) => (
+            <React.Fragment key={index}>
+              <Box my={1} display="flex" justifyContent="center">
+                <Typography variant="caption" color="text.secondary">
+                  {`Page ${index + 1}`}
+                </Typography>
+              </Box>
+              {data.text_description && data.text_description[index] && (
+                <CardContent>
+                  <Typography variant="body2" color="text.secondary">
+                    {data.text_description[index]}
+                  </Typography>
+                </CardContent>
+              )}
+              {data.illustrations && data.illustrations[index] && (
+                <>
+                  <CardMedia
+                    component="img"
+                    height="140"
+                    image={data.illustrations[index]}
+                    alt="Illustration"
+                  />
+                  {data.image_description && data.image_description[index] && (
+                    <CardContent>
+                      <Typography
+                        variant="caption"
+                        color="text.secondary"
+                        style={{ fontSize: "0.5rem", lineHeight: 1 }}
+                      >
+                        {data.image_description[index]}
+                      </Typography>
+                    </CardContent>
+                  )}
+                </>
+              )}
+            </React.Fragment>
+          ))}
+        </Card>
       )}
     </div>
   );
+
+
 };
 
 export default TestBook;

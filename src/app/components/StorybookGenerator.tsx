@@ -46,7 +46,7 @@ const StorybookGenerator: React.FC = () => {
           value={pages}
           onChange={(e: Event, newValue: number | number[]) => setPages(newValue as number)}
         />
-        <Button className="m-1" type="submit" variant="outlined">
+        <Button className="mt-2 mb-4" type="submit" variant="outlined">
           Generate Storybook
         </Button>
       </form>

@@ -1,9 +1,9 @@
 import StorybookGenerator from "../components/StorybookGenerator"
 
-export default async function Picturebook() {
+export default function Picturebook() {
     return (
-        <div className="">
+        <div className="mx-auto max-w-screen-sm">
           <StorybookGenerator />
         </div>
     )
-  }
+}
