@@ -122,7 +122,7 @@ const TestBook: React.FC<TestBookProps> = ({ taskId }) => {
                       <Typography
                         variant="caption"
                         color="text.secondary"
-                        style={{ fontSize: "0.5rem", lineHeight: 1 }}
+                        style={{ fontSize: "0.5rem" }}
                       >
                         {data.image_description[index]}
                       </Typography>
