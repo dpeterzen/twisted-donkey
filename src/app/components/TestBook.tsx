@@ -88,6 +88,7 @@ const TestBook: React.FC<TestBookProps> = ({ taskId }) => {
       </Card>
 
       {data && (
+      <>
         <Card sx={{ maxWidth: 500 }}>
           <CardContent>
             <Typography gutterBottom variant="h5" component="div" style={{ textAlign: 'center' }}>
@@ -132,9 +133,20 @@ const TestBook: React.FC<TestBookProps> = ({ taskId }) => {
             </React.Fragment>
           ))}
         </Card>
-      )}
-    </div>
-  );
+
+        {sseData.status === 'done' && (
+          <Card sx={{ maxWidth: 500, minWidth: 150, marginTop: 2, paddingTop: 2 }}>
+            <CardContent>
+            <Typography gutterBottom variant="h5" component="div" style={{ textAlign: 'center' }}>
+              The End
+            </Typography>
+            </CardContent>
+          </Card>
+        )}
+      </>
+    )}
+  </div>
+);
 
 
 };
