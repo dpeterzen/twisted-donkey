@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import FlipBook from './FlipBook';
+import TestBook from './TestBook';
 import CustomSlider from './ui/CustomSlider';
 import { TextField, Button } from '@mui/material';
 
@@ -50,7 +51,9 @@ const StorybookGenerator: React.FC = () => {
         </Button>
       </form>
 
-      {taskId !== null && <FlipBook taskID={taskId} totalPages={pages} />}
+      {/* {taskId !== null && <FlipBook taskID={taskId} totalPages={pages} />} */}
+      {taskId !== null && <TestBook taskId={taskId} />}
+
     </div>
   );
 };
