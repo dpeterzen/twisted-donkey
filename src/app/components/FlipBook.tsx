@@ -1,55 +1,46 @@
-import React from 'react';
-import { Card, CardContent, CardMedia, Typography } from '@mui/material';
-interface Data {
-    title: string;
-    parsed_image_description: string[];
-    parsed_text_description: string[];
-    illustrations: string[];
-    total_pages: number;
-}
+import React, { useEffect } from 'react';
 
 interface FlipBookProps {
-    data: Data;
+  taskID: string;
+  totalPages: number;
 }
 
-const FlipBook: React.FC<FlipBookProps> = ({ data }) => {
-    const { title, illustrations, parsed_image_description, parsed_text_description } = data;
+const FlipBook: React.FC<FlipBookProps> = ({ taskID, totalPages }) => {
+  useEffect(() => {
+    const eventSource = new EventSource(`${process.env.NEXT_PUBLIC_API_URL}get_updates/${taskID}`);
 
-    // Combine the illustrations, image descriptions, and text descriptions into a single array
-    const pages = illustrations.map((illustration, i) => ({
-        illustration,
-        imageDescription: parsed_image_description[i],
-        textDescription: parsed_text_description[i]
-    }));
+    eventSource.onmessage = (event) => {
+      try {
+        const update = event.data;
+    
+        if (!update.startsWith(':')) {
+          // Process the update as needed
+          const parsedUpdate = JSON.parse(update);
+          console.log(parsedUpdate); // Log the parsed update object
+        
+          if (parsedUpdate.status === 'done') {
+            console.log('status = done');
+            eventSource.close();
+          }
+        }
+      } catch (error) {
+        console.error('Error parsing JSON:', error);
+      }
+    };
 
-    return (
-        <div className='my-4'>
-            <h1>{title}</h1>
-            <br></br>
-            {pages.map((page, i) => (
-                <Card key={i} style={{ maxWidth: 600, marginBottom: 20 }}>
-                    <CardMedia
-                        component="img"
-                        alt={`Illustration ${i + 1}`}
-                        height="240"
-                        image={`data:image/png;base64,${page.illustration}`}
-                        title={`Illustration ${i + 1}`}
-                    />
-                    <CardContent>
-                        <Typography variant="body2" color="textSecondary" component="p">
-                            {page.textDescription}
-                        </Typography>
-                        <Typography variant="caption" color="textSecondary" component="small">
-                            {page.imageDescription}
-                        </Typography>
-                        <Typography variant="caption" color="textSecondary" component="p" align="right">
-                            Page {i + 1}
-                        </Typography>
-                    </CardContent>
-                </Card>
-            ))}
-        </div>
-    );
-}
+    return () => {
+      eventSource.close();
+    };
+  }, [taskID]);
+
+  return (
+    <div>
+      {/* Render your FlipBook component */}
+      <p>FlipBook Component</p>
+      <p>Total Pages: {totalPages}</p>
+      <p>Task ID: {taskID}</p>
+    </div>
+  );
+};
 
 export default FlipBook;
