@@ -89,7 +89,7 @@ const TestBook: React.FC<TestBookProps> = ({ taskId }) => {
 
       {data && (
       <>
-        <Card sx={{ maxWidth: 500 }}>
+        <Card sx={{ maxWidth: 600 }}>
           <CardContent>
             <Typography gutterBottom variant="h5" component="div" style={{ textAlign: 'center' }}>
               {data.title}
