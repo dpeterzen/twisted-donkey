@@ -1,34 +1,49 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Twisted-Donkey
+Frontend application that provides an interface for users to generate storybooks based on their input. Users simply provide a description and choose the number of pages, and the application takes care of the rest.
 
-## Getting Started
+### Demo
+[Try the Front-end Demo](https://picturebook-generator.vercel.app/)
 
-First, run the development server:
+## Features
+- **User-friendly interface**: Simplifies the complex process of generating storybooks into a couple of clicks.
+- **Real-time updates**: Utilizes Server-Sent Events (SSE) to keep users informed about the generation process, showing them progress updates and generated content as it becomes available.
+- **Mobile responsive**: Designed with a mobile-first approach to ensure a smooth experience on all devices.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+## Tech Stack
+- **TypeScript**: The main language used for the frontend server.
+- **Next.js**: React framework for server rendering.
+- **TailwindCSS**: Framework to adjust the application's look and feel.
+- **Vercel**: Platform for hosting and deployment, ensuring fast access times with CDN capabilities.
+- **Javascript Fetch API**: For calling the backend `/get_storybook` endpoint.
+- **Event Source**: Javascript library for consuming SSE.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## How It Works
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Users enter a description and choose a total number of pages on the frontend interface.
+2. Upon submission, the frontend uses the Fetch API to send a request to the backend's `/get_storybook/` endpoint.
+3. The backend responds with a `task_id` which is then used to create an SSE connection using the Event Source library.
+4. As the backend processes the request and generates content, updates are pushed to the frontend in real-time through SSE. Users see the text and images of each page as soon as they're generated and available.
+5. Once the entire storybook has been generated, users can view and enjoy the content.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Local Development
 
-## Learn More
+1. Clone the repository.
+2. Install the required packages using `npm install` or `yarn install`.
+3. Start the local development server using `npm run dev` or `yarn dev`.
+4. Open a browser and navigate to `http://localhost:3000` to view the application.
+5. Ensure the backend service is also running locally to test the entire flow.
 
-To learn more about Next.js, take a look at the following resources:
+## Deployment on Vercel
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Link your repository to your Vercel account.
+2. Choose the master/main branch for continuous deployment.
+3. Set up environment variables if required.
+4. Vercel will automatically deploy your application and provide a live link.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Areas for Improvement
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+1. **UX/UI Enhancements**: Implement smooth transitions between pages or when displaying newly generated content.
+2. **Error Handling**: Improve error messages and handling for failed backend requests or if the SSE connection drops.
+3. **Integration Tests**: Develop end-to-end tests to ensure the frontend and backend work seamlessly together.
+4. **Internationalization (i18n)**: Make the application available in multiple languages.
+5. **New Features**: Integrate user authentication, allow users to save their favorite generated storybooks, or implement a share feature.
